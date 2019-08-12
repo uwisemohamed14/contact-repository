@@ -7,6 +7,8 @@ connectDB();
 
 app.get('/', (req, res) => res.json({ msg: 'Welcome to the link-repo API'}));
 
+//Initialize Middleware
+app.use(express.json({ extended: false }));
 
 //Routes
 
