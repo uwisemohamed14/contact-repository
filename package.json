@@ -1,0 +1,33 @@
+{
+  "name": "link-repo",
+  "version": "1.0.0",
+  "description": "Link repository is a MERN application that lets the user store hyperlinks. The hyperlinks can be filtered based on their category.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uwisemohamed14/link-repository.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uwisemohamed14/link-repository/issues"
+  },
+  "homepage": "https://github.com/uwisemohamed14/link-repository#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.2.2",
+    "express": "^4.17.1",
+    "express-validator": "^6.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.9"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.1",
+    "nodemon": "^1.19.1"
+  }
+}
