@@ -8,7 +8,7 @@ const Link = require('../models/Link');
 
 
 //@route   GET api/links
-//@desc    Get all users contacts
+//@desc    Get all users links
 //@access  Private
 router.get('/', auth, async (req,res) => {
     try{
@@ -36,6 +36,8 @@ router.post('/', [ auth,
             return res.status(400).json({ errors: errors.array() });
         }
 
+        const {about, type, link} = req.body;
+
         try{
             const newLink = new Link({
                 about,
@@ -53,22 +55,63 @@ router.post('/', [ auth,
             res.status(500).send('Server Error');
         }
 
-    const {about, link, type} = req.body;
 
 });
 
 //@route   PUT api/links/:id
 //@desc    Update link
 //@access  Private
-router.put('/:id', (req,res) => {
-    res.send('Update link');
+router.put('/:id', auth, async (req,res) => {
+    const {about, type, link} = req.body;
+
+    //Build Link Object
+    const linkFields = {};
+    if(about) linkFields.about=about;
+    if(type) linkFields.type=type;
+    if(link) linkFields.link=link;
+
+    try{
+        let linkk = await Link.findById(re.params.id);
+        if(!linkk){
+            return res.status(404).json({msg: 'Link not found'});
+        }
+        
+        //Making sure link belongs to a particular user
+        if(linkk.user.toString()!==req.user.id){
+            return res.status(401).json({msg: 'You are not authorized'});
+        }
+
+        linkk = await Link.findByIdAndUpdate(req.params.id, 
+            { $set: linkFields },
+            { new: true });
+            res.json(linkk);
+    }
+    catch(err){
+        console.error(err.message);
+    }
 });
 
 //@route   DELETE api/links/:id
 //@desc    Update link
 //@access  Private
-router.delete('/:id', (req,res) => {
-    res.send('Delete link');
+router.delete('/:id', auth, async (req,res) => {
+    try{
+        let linkk = await Link.findById(re.params.id);
+        if(!linkk){
+            return res.status(404).json({msg: 'Link not found'});
+        }
+        
+        //Making sure link belongs to a particular user
+        if(linkk.user.toString()!==req.user.id){
+            return res.status(401).json({msg: 'You are not authorized'});
+        }
+
+        await Link.findByIdAndRemove(req.params.id);
+        res.json({msg: 'Link removed'});
+    }
+    catch(err){
+        console.error(err.message);
+    }
 });
 
 module.exports = router; 
