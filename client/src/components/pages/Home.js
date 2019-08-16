@@ -1,11 +1,15 @@
 import React from 'react'
+import Links from '../links/Links';
 
 const Home = () => {
     return (
-        <div>
-            <h1>
-                Home
-            </h1>
+        <div className="grid-2">
+            <div>
+                {/* LinkForm */}
+            </div>
+            <div>
+                <Links/>
+            </div>
         </div>
     )
 }

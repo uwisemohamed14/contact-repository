@@ -29,20 +29,20 @@ router.post('/', [ auth,
     [
         check('about', 'Description is required').not().isEmpty(),
         check('type', 'Type is required').not().isEmpty(),
-        check('link', 'Link is required').not().isEmpty()
+        check('url', 'URL is required').not().isEmpty()
 ]], async (req,res) => {
     const errors = validationResult(req);
         if(!errors.isEmpty()){
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const {about, type, link} = req.body;
+        const {about, type, url} = req.body;
 
         try{
             const newLink = new Link({
                 about,
                 type,
-                link,
+                url,
                 user: req.user.id
             });
 
@@ -62,13 +62,13 @@ router.post('/', [ auth,
 //@desc    Update link
 //@access  Private
 router.put('/:id', auth, async (req,res) => {
-    const {about, type, link} = req.body;
+    const {about, type, url} = req.body;
 
     //Build Link Object
     const linkFields = {};
     if(about) linkFields.about=about;
     if(type) linkFields.type=type;
-    if(link) linkFields.link=link;
+    if(url) linkFields.url=url;
 
     try{
         let linkk = await Link.findById(re.params.id);
