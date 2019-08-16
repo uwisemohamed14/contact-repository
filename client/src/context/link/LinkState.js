@@ -17,21 +17,21 @@ const LinkState = props => {
         links: [
             {
                 id: 1,
-                about: 'uwise',
-                type: 'naruto',
-                url: 'shippudden'
+                about: 'React',
+                type: 'WebDev',
+                url: 'www.medium.com'
             },
             {
                 id: 2,
-                about: 'meka',
-                type: 'code',
-                url: 'geass'
+                about: 'Django',
+                type: 'WebDev',
+                url: 'www.udemy.com'
             },
             {
                 id: 3,
-                about: 'sow',
-                type: 'tokyo',
-                url: 'ghoul'
+                about: 'Search Engines',
+                type: 'General',
+                url: 'www.google.com'
             }
         ]
     };
