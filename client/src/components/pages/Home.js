@@ -1,11 +1,12 @@
 import React from 'react'
 import Links from '../links/Links';
+import LinkForm from '../links/LinkForm';
 
 const Home = () => {
     return (
         <div className="grid-2">
             <div>
-                {/* LinkForm */}
+                <LinkForm />
             </div>
             <div>
                 <Links/>

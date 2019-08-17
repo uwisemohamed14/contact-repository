@@ -19,7 +19,7 @@ const LinkState = props => {
                 id: 1,
                 about: 'React',
                 type: 'WebDev',
-                url: 'www.medium.com'
+                url: 'www.google.com'
             },
             {
                 id: 2,
@@ -40,8 +40,16 @@ const LinkState = props => {
 
     //All of the actions.
 
+    //Add Links
+
+    const addLink = link => {
+        link.id= uuid.v4();
+        dispatch({type: ADD_LINK, payload: link});
+    };
+
     return (
-        <LinkContext.Provider value={{links: state.links}}>
+        <LinkContext.Provider value={{links: state.links,
+        addLink}}>
             { props.children }
         </LinkContext.Provider>
     )
