@@ -5,12 +5,18 @@ import LinkContext from '../../context/link/linkContext';
 const Links = () => {
     const linkContext = useContext(LinkContext);
 
-    const { links } = linkContext;
+    const { links, filtered } = linkContext;
+
+    if(links.length === 0){
+        return <h4>Please add a link</h4>
+    }
     return (
         <Fragment>
-            {links.map(link => <h3>
+            {filtered !==null ? filtered.map(link => (<LinkItem key={link.id} 
+            link={link}/> )) : links.map(link => <h3>
                 <LinkItem key={link.id} link={link}/>
             </h3>)}
+            
         </Fragment>
     )
 }

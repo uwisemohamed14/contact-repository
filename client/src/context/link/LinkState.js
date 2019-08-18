@@ -34,7 +34,8 @@ const LinkState = props => {
                 url: 'www.google.com'
             }
         ],
-        current: null
+        current: null,
+        filtered: null
     };
 
     const [state, dispatch] = useReducer(linkReducer, initialState);
@@ -69,14 +70,28 @@ const LinkState = props => {
         dispatch({type: UPDATE_LINK, payload: link});
     };
 
+    //Filter Links
+    const filterLinks = text => {
+        dispatch({type: FILTER_LINKS, payload: text});
+    };
+
+    //Clear Links
+
+    const clearFilter = () => {
+        dispatch({type: CLEAR_FILTER});
+    };
+
     return (
         <LinkContext.Provider value={{links: state.links,
         current: state.current,
+        filtered: state.filtered,
         addLink, 
         deleteLink,
         setCurrent,
         clearCurrent,
-        updateLink}}>
+        updateLink,
+        filterLinks,
+        clearFilter}}>
             { props.children }
         </LinkContext.Provider>
     )
