@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import LinkContext from '../../context/link/linkContext';
 
 
 
 const LinkItem = ({ link }) => {
+    const linkContext = useContext(LinkContext);
+    const {deleteLink, setCurrent, clearCurrent } = linkContext;
     const {id, about, type, url } = link;
+    const onDelete = () => {
+        deleteLink(id);
+        clearCurrent();
+    }
     return (
         <div className='card bg-light'>
             <h3 className="text-primary text-left">
@@ -17,8 +23,8 @@ const LinkItem = ({ link }) => {
                 </li>)}
             </ul>
             <p>
-                <button className="btn btn-dark btn-sm">Edit</button>
-                <button className="btn btn-danger btn-sm">Delete</button>
+                <button className="btn btn-dark btn-sm" onClick={() => setCurrent(link)}>Edit</button>
+                <button className="btn btn-danger btn-sm" onClick={onDelete}>Delete</button>
 
             </p>
         </div>

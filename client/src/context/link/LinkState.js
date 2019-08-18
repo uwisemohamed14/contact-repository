@@ -33,7 +33,8 @@ const LinkState = props => {
                 type: 'General',
                 url: 'www.google.com'
             }
-        ]
+        ],
+        current: null
     };
 
     const [state, dispatch] = useReducer(linkReducer, initialState);
@@ -47,9 +48,35 @@ const LinkState = props => {
         dispatch({type: ADD_LINK, payload: link});
     };
 
+    //Delete link
+    const deleteLink = id => {
+        dispatch({type: DELETE_LINK, payload: id});
+    };
+
+    //Set Current Link
+    const setCurrent = link => {
+        dispatch({type: SET_CURRENT, payload: link});
+    };
+
+    //Clear current Link
+    const clearCurrent = () => {
+        dispatch({type: CLEAR_CURRENT});
+    };
+
+    //Update Link
+
+    const updateLink = link => {
+        dispatch({type: UPDATE_LINK, payload: link});
+    };
+
     return (
         <LinkContext.Provider value={{links: state.links,
-        addLink}}>
+        current: state.current,
+        addLink, 
+        deleteLink,
+        setCurrent,
+        clearCurrent,
+        updateLink}}>
             { props.children }
         </LinkContext.Provider>
     )
