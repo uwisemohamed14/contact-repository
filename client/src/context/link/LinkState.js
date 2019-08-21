@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import axios from 'axios';
+// import uuid from 'uuid';
 import LinkContext from './linkContext'; //Try small l if dont work
 import linkReducer from './linkReducer';
 import {
@@ -9,33 +10,16 @@ import {
     CLEAR_CURRENT,
     UPDATE_LINK,
     FILTER_LINKS,
-    CLEAR_FILTER
+    CLEAR_FILTER,
+    LINK_ERROR
 } from '../types';
 
 const LinkState = props => {
     const initialState = {
-        links: [
-            {
-                id: 1,
-                about: 'React',
-                type: 'WebDev',
-                url: 'www.google.com'
-            },
-            {
-                id: 2,
-                about: 'Django',
-                type: 'WebDev',
-                url: 'www.udemy.com'
-            },
-            {
-                id: 3,
-                about: 'Search Engines',
-                type: 'General',
-                url: 'www.google.com'
-            }
-        ],
+        links: [],
         current: null,
-        filtered: null
+        filtered: null,
+        error: null
     };
 
     const [state, dispatch] = useReducer(linkReducer, initialState);
@@ -44,9 +28,22 @@ const LinkState = props => {
 
     //Add Links
 
-    const addLink = link => {
-        link.id= uuid.v4();
-        dispatch({type: ADD_LINK, payload: link});
+    const addLink = async link => {
+        const config = { 
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try{
+            const res= await axios.post('/api/links', link, config);
+            dispatch({type: ADD_LINK, payload: res.data});
+
+        }
+        catch(err){
+            dispatch({ type: LINK_ERROR,
+            payload: err.response.msg})
+        }
     };
 
     //Delete link
@@ -85,6 +82,7 @@ const LinkState = props => {
         <LinkContext.Provider value={{links: state.links,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
         addLink, 
         deleteLink,
         setCurrent,

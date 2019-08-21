@@ -5,7 +5,8 @@ import {
     CLEAR_CURRENT,
     UPDATE_LINK,
     FILTER_LINKS,
-    CLEAR_FILTER
+    CLEAR_FILTER,
+    LINK_ERROR
 } from '../types';
 
 export default (state, action) => {
@@ -18,7 +19,7 @@ export default (state, action) => {
         case UPDATE_LINK:
             return {
                 ...state,
-                links: state.links.map(link => link.id ===action.payload.id ? action.payload : link)
+                links: state.links.map(link => link.id === action.payload.id ? action.payload : link)
             }
         case DELETE_LINK:
             return {
@@ -47,7 +48,12 @@ export default (state, action) => {
                     return {
                         ...state,
                         filtered: null
-                            }       
+                            }  
+        case LINK_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            };     
         default:
             return state;
 

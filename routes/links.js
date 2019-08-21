@@ -40,10 +40,10 @@ router.post('/', [ auth,
 
         try{
             const newLink = new Link({
+                user: req.user.id,
                 about,
                 type,
                 url,
-                user: req.user.id
             });
 
             const link = await newLink.save();
